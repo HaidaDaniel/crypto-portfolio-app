@@ -5,7 +5,6 @@ const apiUrl = process.env.REACT_APP_API_URL
 
 export async function fetchCryptoData() {
     try {
-        console.log(apiUrl)
         const response = await axios.get(apiUrl, {
             headers: {
                 Authorization: `Bearer ${apiKey}`,

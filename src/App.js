@@ -5,11 +5,15 @@ import {
   SortingState,
   PagingState,
   IntegratedPaging,
+  SearchState,
+  IntegratedFiltering,
   IntegratedSorting,
 } from '@devexpress/dx-react-grid';
 import {
   Grid,
   Table,
+  Toolbar,
+  SearchPanel,
   TableHeaderRow,
   PagingPanel,
 } from '@devexpress/dx-react-grid-material-ui'
@@ -75,13 +79,17 @@ function App() {
           />
           <PagingState
             defaultCurrentPage={0}
-            pageSize={5}
+            pageSize={20}
           />
           <IntegratedPaging />
+          <SearchState defaultValue="" />
+          <IntegratedFiltering />
           <IntegratedSorting />
           <Table columnExtensions={tableColumnExtensions} />
           <TableHeaderRow showSortingControls />
           <PagingPanel />
+          <Toolbar />
+          <SearchPanel />
         </Grid>
       )}
     </Paper>
