@@ -1,5 +1,5 @@
 /** @format */
-
+import { Button } from '@mui/material';
 import Paper from '@mui/material/Paper'
 import {
   SortingState,
@@ -50,9 +50,10 @@ const columns = [
 ]
 
 function App() {
+  const [favorites, setFavorites] = useState([]);
   const [tableColumnExtensions] = useState([
     { columnName: 'rank', width: '8%' },
-    { columnName: 'id', width: '11%' },
+    { columnName: 'id', width: '15%' },
     { columnName: 'name', width: '11%' },
     { columnName: 'marketCapUsd', width: '15%' },
     { columnName: 'priceUsd', width: '10%' },
@@ -68,6 +69,35 @@ function App() {
       setIsLoading(false)
     })
   }, [])
+  const toggleFavorite = (id) => {
+    if (favorites.includes(id)) {
+
+      const updatedFavorites = favorites.filter((favoriteId) => favoriteId !== id);
+      setFavorites(updatedFavorites);
+    } else {
+
+      setFavorites([...favorites, id]);
+    }
+  };
+  const TableRow = ({ row, onToggleFavorite }) => (
+    <Table.Row>
+      {columns.map((column) => (
+        <Table.Cell key={column.name}>
+          {column.name === 'id' ? (
+            <Button
+              onClick={() => onToggleFavorite(row.id)}
+              variant="outlined"
+              color="primary"
+            >
+              {favorites.includes(row.id) ? 'Remove from Fav' : 'Add to Fav'}
+            </Button>
+          ) : (
+            row[column.name]
+          )}
+        </Table.Cell>
+      ))}
+    </Table.Row>
+  );
 
   return (
     <Paper>
@@ -85,7 +115,11 @@ function App() {
           <SearchState defaultValue="" />
           <IntegratedFiltering />
           <IntegratedSorting />
-          <Table columnExtensions={tableColumnExtensions} />
+          <Table columnExtensions={tableColumnExtensions}
+            rowComponent={({ row }) => (
+              <TableRow row={row} onToggleFavorite={toggleFavorite} />
+            )} />
+
           <TableHeaderRow showSortingControls />
           <PagingPanel />
           <Toolbar />
