@@ -29,6 +29,7 @@ export async function fetchCryptoData() {
                 volumeUsd24Hr: roundToNDecimalPlaces(crypto.volumeUsd24Hr, 4),
                 priceUsd: roundToNDecimalPlaces(crypto.priceUsd, 4),
                 vwap24Hr: roundToNDecimalPlaces(crypto.vwap24Hr, 4),
+                rank: parseInt(crypto.rank),
             };
         });
         return filteredAndRoundedData;

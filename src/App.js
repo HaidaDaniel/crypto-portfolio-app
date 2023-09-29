@@ -2,9 +2,16 @@
 
 import Paper from '@mui/material/Paper'
 import {
+  SortingState,
+  PagingState,
+  IntegratedPaging,
+  IntegratedSorting,
+} from '@devexpress/dx-react-grid';
+import {
   Grid,
   Table,
   TableHeaderRow,
+  PagingPanel,
 } from '@devexpress/dx-react-grid-material-ui'
 import { useEffect, useState } from 'react'
 
@@ -15,17 +22,14 @@ const columns = [
   {
     name: 'rank',
     title: 'rank',
-    width: '50px',
   },
   {
     name: 'id',
     title: 'ID',
-    width: '100px',
   },
   {
     name: 'name',
     title: 'Name',
-    width: '100px',
   },
   {
     name: 'marketCapUsd',
@@ -34,7 +38,6 @@ const columns = [
   {
     name: 'priceUsd',
     title: 'priceUsd',
-    width: '200px',
   },
   {
     name: 'volumeUsd24Hr',
@@ -43,6 +46,14 @@ const columns = [
 ]
 
 function App() {
+  const [tableColumnExtensions] = useState([
+    { columnName: 'rank', width: '8%' },
+    { columnName: 'id', width: '11%' },
+    { columnName: 'name', width: '11%' },
+    { columnName: 'marketCapUsd', width: '15%' },
+    { columnName: 'priceUsd', width: '10%' },
+    { columnName: 'volumeUsd24Hr', width: '15%' },
+  ]);
   const [rows, setRows] = useState([])
   const [isLoading, setIsLoading] = useState(false)
 
@@ -59,8 +70,18 @@ function App() {
       {isLoading && <>Loading...</>}
       {!isLoading && (
         <Grid rows={rows} columns={columns}>
-          <Table />
-          <TableHeaderRow />
+          <SortingState
+            defaultSorting={[{ columnName: 'rank', direction: 'asc' }]}
+          />
+          <PagingState
+            defaultCurrentPage={0}
+            pageSize={5}
+          />
+          <IntegratedPaging />
+          <IntegratedSorting />
+          <Table columnExtensions={tableColumnExtensions} />
+          <TableHeaderRow showSortingControls />
+          <PagingPanel />
         </Grid>
       )}
     </Paper>
