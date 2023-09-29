@@ -21,6 +21,7 @@ import { useEffect, useState } from 'react'
 
 import { fetchCryptoData } from './api'
 import './App.css'
+import Header from './components/Header';
 
 const columns = [
   {
@@ -101,6 +102,7 @@ function App() {
 
   return (
     <Paper>
+      <Header />
       {isLoading && <>Loading...</>}
       {!isLoading && (
         <Grid rows={rows} columns={columns}>
