@@ -29,10 +29,6 @@ const columns = [
     title: 'rank',
   },
   {
-    name: 'id',
-    title: 'ID',
-  },
-  {
     name: 'name',
     title: 'Name',
   },
@@ -48,17 +44,22 @@ const columns = [
     name: 'volumeUsd24Hr',
     title: 'volumeUsd/24Hr',
   },
+  {
+    name: 'id',
+    title: 'Add to fav',
+  },
 ]
 
 function App() {
   const [favorites, setFavorites] = useState([]);
   const [tableColumnExtensions] = useState([
-    { columnName: 'rank', width: '8%' },
-    { columnName: 'id', width: '15%' },
+    { columnName: 'rank', width: '10%', align: 'center' },
     { columnName: 'name', width: '11%' },
-    { columnName: 'marketCapUsd', width: '15%' },
-    { columnName: 'priceUsd', width: '10%' },
-    { columnName: 'volumeUsd24Hr', width: '15%' },
+    { columnName: 'marketCapUsd', width: '18%' },
+    { columnName: 'priceUsd', width: '12%' },
+    { columnName: 'volumeUsd24Hr', width: '18%' },
+    { columnName: 'id', width: '15%', align: 'center' },
+
   ]);
   const [rows, setRows] = useState([])
   const [isLoading, setIsLoading] = useState(false)
@@ -83,7 +84,7 @@ function App() {
   const TableRow = ({ row, onToggleFavorite }) => (
     <Table.Row>
       {columns.map((column) => (
-        <Table.Cell key={column.name}>
+        <Table.Cell key={column.name} style={column.name === 'rank' ? { paddingLeft: '0px', paddingRight: '8px', paddingTop: '16px', paddingBottom: '16px', textAlign: 'center' } : {}}>
           {column.name === 'id' ? (
             <Button
               onClick={() => onToggleFavorite(row.id)}
@@ -120,12 +121,12 @@ function App() {
           <Table columnExtensions={tableColumnExtensions}
             rowComponent={({ row }) => (
               <TableRow row={row} onToggleFavorite={toggleFavorite} />
-            )} />
-
-          <TableHeaderRow showSortingControls />
+            )}
+          />
           <PagingPanel />
           <Toolbar />
           <SearchPanel />
+          <TableHeaderRow showSortingControls />
         </Grid>
       )}
     </Paper>
@@ -133,3 +134,5 @@ function App() {
 }
 
 export default App
+
+
