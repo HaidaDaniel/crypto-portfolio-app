@@ -33,16 +33,16 @@ const columns = [
     title: 'Name',
   },
   {
-    name: 'marketCapUsd',
-    title: 'marketCapUsd',
-  },
-  {
     name: 'priceUsd',
     title: 'priceUsd',
   },
   {
     name: 'volumeUsd24Hr',
     title: 'volumeUsd/24Hr',
+  },
+  {
+    name: 'marketCapUsd',
+    title: 'marketCapUsd',
   },
   {
     name: 'id',
@@ -53,16 +53,25 @@ const columns = [
 function App() {
   const [favorites, setFavorites] = useState([]);
   const [tableColumnExtensions] = useState([
-    { columnName: 'rank', width: '10%', align: 'center' },
-    { columnName: 'name', width: '11%' },
-    { columnName: 'marketCapUsd', width: '18%' },
-    { columnName: 'priceUsd', width: '12%' },
+    { columnName: 'rank', width: '10%', align: 'left' },
+    { columnName: 'name', width: '18%' },
+    { columnName: 'priceUsd', width: '16%' },
+    { columnName: 'marketCapUsd', width: '17%' },
     { columnName: 'volumeUsd24Hr', width: '18%' },
     { columnName: 'id', width: '15%', align: 'center' },
 
   ]);
+  const priceCompare = (a, b) => {
+    return Math.abs(a - b) <= 0.01
+  };
   const [rows, setRows] = useState([])
   const [isLoading, setIsLoading] = useState(false)
+  const [integratedSortingColumnExtensions] = useState([
+    { columnName: 'priceUsd', compare: priceCompare },
+  ]);
+  const [SortingColumnExtensions] = useState([
+    { columnName: 'id', sortingEnabled: false },
+  ]);
 
   useEffect(() => {
     setIsLoading(true)
@@ -109,15 +118,17 @@ function App() {
         <Grid rows={rows} columns={columns}>
           <SortingState
             defaultSorting={[{ columnName: 'rank', direction: 'asc' }]}
+            columnExtensions={SortingColumnExtensions}
           />
+          <IntegratedSorting
+            ColumnExtension={integratedSortingColumnExtensions} />
           <PagingState
             defaultCurrentPage={0}
-            pageSize={20}
+            pageSize={200}
           />
           <IntegratedPaging />
           <SearchState defaultValue="" />
           <IntegratedFiltering />
-          <IntegratedSorting />
           <Table columnExtensions={tableColumnExtensions}
             rowComponent={({ row }) => (
               <TableRow row={row} onToggleFavorite={toggleFavorite} />

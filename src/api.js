@@ -12,6 +12,7 @@ export async function fetchCryptoData() {
         });
 
         const rawData = response.data.data;
+
         const isNumber = (value) => !isNaN(parseFloat(value)) && isFinite(value);
         const roundToNDecimalPlaces = (value, n) => {
             if (isNumber(value)) {
@@ -22,15 +23,16 @@ export async function fetchCryptoData() {
         const filteredAndRoundedData = rawData.map((crypto) => {
             return {
                 ...crypto,
-                supply: roundToNDecimalPlaces(crypto.supply, 4),
-                maxSupply: roundToNDecimalPlaces(crypto.maxSupply, 4),
-                marketCapUsd: roundToNDecimalPlaces(crypto.marketCapUsd, 4),
-                volumeUsd24Hr: roundToNDecimalPlaces(crypto.volumeUsd24Hr, 4),
-                priceUsd: roundToNDecimalPlaces(crypto.priceUsd, 4),
-                vwap24Hr: roundToNDecimalPlaces(crypto.vwap24Hr, 4),
+                supply: parseInt(roundToNDecimalPlaces(crypto.supply, 0)),
+                maxSupply: parseInt(roundToNDecimalPlaces(crypto.maxSupply, 0)),
+                marketCapUsd: parseInt(roundToNDecimalPlaces(crypto.marketCapUsd, 0)),
+                volumeUsd24Hr: parseInt(roundToNDecimalPlaces(crypto.volumeUsd24Hr, 0)),
+                priceUsd: parseFloat(roundToNDecimalPlaces(crypto.priceUsd, 10)),
+                vwap24Hr: parseInt(roundToNDecimalPlaces(crypto.vwap24Hr, 0)),
                 rank: parseInt(crypto.rank),
             };
         });
+        console.log(filteredAndRoundedData)
         return filteredAndRoundedData;
     } catch (error) {
         console.error('Error in downloading data', error);
