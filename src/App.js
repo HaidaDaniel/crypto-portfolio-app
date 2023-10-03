@@ -26,7 +26,7 @@ import Header from './components/Header';
 const columns = [
   {
     name: 'rank',
-    title: 'rank',
+    title: 'Rank',
   },
   {
     name: 'name',
@@ -34,15 +34,15 @@ const columns = [
   },
   {
     name: 'priceUsd',
-    title: 'priceUsd',
+    title: 'Price',
   },
   {
     name: 'volumeUsd24Hr',
-    title: 'volumeUsd/24Hr',
+    title: 'Volume /24Hr',
   },
   {
     name: 'marketCapUsd',
-    title: 'marketCapUsd',
+    title: 'Market Capitalization',
   },
   {
     name: 'id',
@@ -54,21 +54,15 @@ function App() {
   const [favorites, setFavorites] = useState([]);
   const [tableColumnExtensions] = useState([
     { columnName: 'rank', width: '10%', align: 'left' },
-    { columnName: 'name', width: '18%' },
-    { columnName: 'priceUsd', width: '16%' },
-    { columnName: 'marketCapUsd', width: '17%' },
-    { columnName: 'volumeUsd24Hr', width: '18%' },
-    { columnName: 'id', width: '15%', align: 'center' },
+    { columnName: 'name', width: '15%', align: 'center' },
+    { columnName: 'priceUsd', width: '20%', align: 'right' },
+    { columnName: 'volumeUsd24Hr', width: '15%', align: 'right' },
+    { columnName: 'marketCapUsd', width: '16%', align: 'right' },
+    { columnName: 'id', width: '14%', align: 'center' },
 
   ]);
-  const priceCompare = (a, b) => {
-    return Math.abs(a - b) <= 0.01
-  };
   const [rows, setRows] = useState([])
   const [isLoading, setIsLoading] = useState(false)
-  const [integratedSortingColumnExtensions] = useState([
-    { columnName: 'priceUsd', compare: priceCompare },
-  ]);
   const [SortingColumnExtensions] = useState([
     { columnName: 'id', sortingEnabled: false },
   ]);
@@ -80,6 +74,19 @@ function App() {
       setIsLoading(false)
     })
   }, [])
+  const cellStyles = (name) => {
+    switch (name) {
+      case 'rank':
+        return { paddingLeft: '0px', paddingRight: '8px', paddingTop: '16px', paddingBottom: '16px', textAlign: 'center' }
+      case 'name':
+        return { textAlign: 'center' }
+      case 'id':
+        return { textAlign: 'center' }
+      default: return { textAlign: 'right' }
+
+    }
+
+  }
   const toggleFavorite = (id) => {
     if (favorites.includes(id)) {
 
@@ -93,7 +100,7 @@ function App() {
   const TableRow = ({ row, onToggleFavorite }) => (
     <Table.Row>
       {columns.map((column) => (
-        <Table.Cell key={column.name} style={column.name === 'rank' ? { paddingLeft: '0px', paddingRight: '8px', paddingTop: '16px', paddingBottom: '16px', textAlign: 'center' } : {}}>
+        <Table.Cell key={column.name} style={cellStyles(column.name)} >
           {column.name === 'id' ? (
             <Button
               onClick={() => onToggleFavorite(row.id)}
@@ -102,6 +109,8 @@ function App() {
             >
               {favorites.includes(row.id) ? 'Remove from Fav' : 'Add to Fav'}
             </Button>
+          ) : column.name === 'priceUsd' || column.name === 'marketCapUsd' || column.name === 'volumeUsd24Hr' ? (
+            `${row[column.name]} $`
           ) : (
             row[column.name]
           )}
@@ -120,8 +129,7 @@ function App() {
             defaultSorting={[{ columnName: 'rank', direction: 'asc' }]}
             columnExtensions={SortingColumnExtensions}
           />
-          <IntegratedSorting
-            ColumnExtension={integratedSortingColumnExtensions} />
+          <IntegratedSorting />
           <PagingState
             defaultCurrentPage={0}
             pageSize={200}
