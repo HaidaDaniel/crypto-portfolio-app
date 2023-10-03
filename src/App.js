@@ -50,7 +50,7 @@ const columns = [
   },
 ]
 
-function App() {
+const App = () => {
   const [favorites, setFavorites] = useState([]);
   const [tableColumnExtensions] = useState([
     { columnName: 'rank', width: '10%', align: 'left' },
@@ -83,10 +83,9 @@ function App() {
       case 'id':
         return { textAlign: 'center' }
       default: return { textAlign: 'right' }
-
     }
-
   }
+
   const toggleFavorite = (id) => {
     if (favorites.includes(id)) {
 
@@ -97,6 +96,7 @@ function App() {
       setFavorites([...favorites, id]);
     }
   };
+
   const TableRow = ({ row, onToggleFavorite }) => (
     <Table.Row>
       {columns.map((column) => (
@@ -117,7 +117,7 @@ function App() {
         </Table.Cell>
       ))}
     </Table.Row>
-  );
+  )
 
   return (
     <Paper>
