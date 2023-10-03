@@ -132,11 +132,13 @@ function App() {
           <IntegratedSorting />
           <PagingState
             defaultCurrentPage={0}
-            pageSize={200}
+            pageSize={20}
           />
-          <IntegratedPaging />
           <SearchState defaultValue="" />
           <IntegratedFiltering />
+          <IntegratedPaging />
+
+
           <Table columnExtensions={tableColumnExtensions}
             rowComponent={({ row }) => (
               <TableRow row={row} onToggleFavorite={toggleFavorite} />
