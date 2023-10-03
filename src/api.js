@@ -5,6 +5,11 @@ const apiUrl = process.env.REACT_APP_API_URL
 
 export async function fetchCryptoData() {
     try {
+        console.log(apiUrl, {
+            headers: {
+                Authorization: `Bearer ${apiKey}`,
+            },
+        })
         const response = await axios.get(apiUrl, {
             headers: {
                 Authorization: `Bearer ${apiKey}`,
@@ -12,6 +17,7 @@ export async function fetchCryptoData() {
         });
 
         const rawData = response.data.data;
+
 
         const isNumber = (value) => !isNaN(parseFloat(value)) && isFinite(value);
         const roundToNDecimalPlaces = (value, n) => {
