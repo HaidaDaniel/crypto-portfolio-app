@@ -42,7 +42,6 @@ export async function fetchCryptoData() {
             return {
                 ...crypto,
                 supply: parseInt(roundToNDecimalPlaces(crypto.supply, 0)),
-                maxSupply: parseInt(roundToNDecimalPlaces(crypto.maxSupply, 0)),
                 marketCapUsd: parseInt(roundToNDecimalPlaces(crypto.marketCapUsd, 0)),
                 volumeUsd24Hr: parseInt(roundToNDecimalPlaces(crypto.volumeUsd24Hr, 0)),
                 priceUsd: parseFloat(roundToNDecimalPlaces(crypto.priceUsd, 10)),

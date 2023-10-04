@@ -5,7 +5,7 @@ query AllCryptos{
     allCryptos{
        id,
      name,
-     rank,
+     sname,
      priceUsd,
      volumeUsd24Hr,
      marketCapUsd,

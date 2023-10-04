@@ -1,10 +1,10 @@
 import Header from '../Header'
-import MainTable from '../MainTable'
+import FavoritesTable from '../FavoritesTable'
 
 
 export const Favorites = () => (
     <>
         <Header></Header>
-        <MainTable></MainTable>
+        <FavoritesTable />
     </>
 )

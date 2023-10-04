@@ -1,6 +1,6 @@
 export const columns = [
     {
-        name: 'rank',
+        name: 'id',
         title: 'Rank',
     },
     {
@@ -20,31 +20,31 @@ export const columns = [
         title: 'Market Capitalization',
     },
     {
-        name: 'id',
+        name: 'sname',
         title: 'Add to fav',
     },
 ]
 
 export const ColumnExtensionsState = [
-    { columnName: 'rank', width: '10%', align: 'left' },
+    { columnName: 'id', width: '10%', align: 'left' },
     { columnName: 'name', width: '15%', align: 'center' },
     { columnName: 'priceUsd', width: '20%', align: 'right' },
     { columnName: 'volumeUsd24Hr', width: '15%', align: 'right' },
     { columnName: 'marketCapUsd', width: '16%', align: 'right' },
-    { columnName: 'id', width: '14%', align: 'center' },
+    { columnName: 'sname', width: '14%', align: 'center' },
 
 ]
 export const cellStyles = (name) => {
     switch (name) {
-        case 'rank':
+        case 'id':
             return { paddingLeft: '0px', paddingRight: '8px', paddingTop: '16px', paddingBottom: '16px', textAlign: 'center' }
         case 'name':
             return { textAlign: 'center' }
-        case 'id':
+        case 'sname':
             return { textAlign: 'center' }
         default: return { textAlign: 'right' }
     }
 }
 export const SortingColumnExtensionsState = [
-    { columnName: 'id', sortingEnabled: false },
+    { columnName: 'sname', sortingEnabled: false },
 ]
