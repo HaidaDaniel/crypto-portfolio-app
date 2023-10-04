@@ -1,8 +1,5 @@
 export const columns = [
-    {
-        name: 'id',
-        title: 'Rank',
-    },
+
     {
         name: 'name',
         title: 'Name',
@@ -26,7 +23,6 @@ export const columns = [
 ]
 
 export const ColumnExtensionsState = [
-    { columnName: 'id', width: '10%', align: 'left' },
     { columnName: 'name', width: '15%', align: 'center' },
     { columnName: 'priceUsd', width: '20%', align: 'right' },
     { columnName: 'volumeUsd24Hr', width: '15%', align: 'right' },
@@ -36,8 +32,6 @@ export const ColumnExtensionsState = [
 ]
 export const cellStyles = (name) => {
     switch (name) {
-        case 'id':
-            return { paddingLeft: '0px', paddingRight: '8px', paddingTop: '16px', paddingBottom: '16px', textAlign: 'center' }
         case 'name':
             return { textAlign: 'center' }
         case 'sname':

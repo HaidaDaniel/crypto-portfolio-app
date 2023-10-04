@@ -20,7 +20,7 @@ import { Button } from "@mui/material";
 import CircularProgress from '@mui/material/CircularProgress';
 import { useMutation, useQuery } from '@apollo/client'
 
-import { ColumnExtensionsState, columns, cellStyles, SortingColumnExtensionsState } from "./gridProperties/mainGrid";
+import { ColumnExtensionsState, columns, cellStyles, SortingColumnExtensionsState } from "./gridProperties/favGrid";
 
 import { ADD_FAVORITE, ALL_FAVORITES, ALL_FAVORITES_DATA, REMOVE_FAVORITE } from "../apollo/favorites";
 
