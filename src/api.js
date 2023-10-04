@@ -1,24 +1,36 @@
 import axios from "axios";
 
-const apiKey = process.env.REACT_APP_API_KEY
-const apiUrl = process.env.REACT_APP_API_URL
+const apiUrl = "http://localhost:4000/graphql"; // Укажите правильный URL для вашего локального сервера GraphQL
 
 export async function fetchCryptoData() {
     try {
-        console.log(apiUrl, {
-            headers: {
-                Authorization: `Bearer ${apiKey}`,
+        const graphqlQuery = `
+      {
+        allCryptos {
+          id
+          rank
+          symbol
+          name
+          supply
+          maxSupply
+          marketCapUsd
+          volumeUsd24Hr
+          priceUsd
+          changePercent24Hr
+          vwap24Hr
+          explorer
+        }
+      }
+    `;
+
+        const response = await axios.post(
+            apiUrl,
+            {
+                query: graphqlQuery,
             },
-        })
-        const response = await axios.get(apiUrl, {
-            headers: {
-                Authorization: `Bearer ${apiKey}`,
-            },
-        });
+        );
 
-        const rawData = response.data.data;
-
-
+        const rawData = response.data.data.allCryptos;
         const isNumber = (value) => !isNaN(parseFloat(value)) && isFinite(value);
         const roundToNDecimalPlaces = (value, n) => {
             if (isNumber(value)) {
