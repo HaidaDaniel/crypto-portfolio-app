@@ -24,22 +24,13 @@ import { ColumnExtensionsState, columns, cellStyles, SortingColumnExtensionsStat
 import { ALL_CRYPTOS } from "../apollo/cryptos";
 import { ADD_FAVORITE, ALL_FAVORITES, REMOVE_FAVORITE } from "../apollo/favorites";
 
-const FavoritesTable = () => {
+const MainTable = () => {
     const { loading, error, data: cryptos } = useQuery(ALL_CRYPTOS)
-    const { loadingFav, data: favorites } = useQuery(ALL_FAVORITES)
+    const { data: favorites } = useQuery(ALL_FAVORITES)
     const [addFavorite] = useMutation(ADD_FAVORITE, {
         refetchQueries: [
             { query: ALL_FAVORITES }
         ]
-        // update(cache, { data: { newFav } }) {
-        //     const { favorites } = cache.readQuery({ query: ALL_FAVORITES })
-        //     cache.writeQuery({
-        //         query: ALL_FAVORITES,
-        //         data: {
-        //             fovorites: [newFav, ...favorites]
-        //         }
-        //     })
-        // }
     });
     const [removeFavorite] = useMutation(REMOVE_FAVORITE, {
         refetchQueries: [
@@ -57,6 +48,7 @@ const FavoritesTable = () => {
         return value;
     }
     const arrayFavs = favorites?.allFavorites
+    console.log(arrayFavs)
     const filteredAndRoundedData = rawData?.map((crypto) => {
         return {
             ...crypto,
@@ -67,27 +59,22 @@ const FavoritesTable = () => {
             id: parseInt(crypto.id),
         };
     });
-    const toggleFavorite = async (row) => {
+    const toggleFavorite = async (crypto_id) => {
         try {
-            if (arrayFavs.some((item) => item.name === row.name)) {
-                const removedId = parseInt(arrayFavs.find((item) => item.name === row.name).id)
-                await removeFavorite({ variables: { id: removedId } });
-                console.log(`Removed to favorites: ${row.name}`);
+            if (arrayFavs?.some((fav) => parseInt(fav.crypto_id) === crypto_id)) {
+                const favid = arrayFavs?.filter((obj) => obj.crypto_id === crypto_id.toString())[0].id
+                console.log(favid, crypto_id)
+                await removeFavorite({ variables: { id: favid } });
+                console.log(`Removed to favorites: ${crypto_id}`);
             }
             else {
-                const cryptodata = rawData.find((item) => item.name === row.name)
                 await addFavorite({
                     variables: {
-                        name: cryptodata.name,
-                        sname: cryptodata.sname,
-                        priceUsd: cryptodata.priceUsd,
-                        volumeUsd24Hr: cryptodata.volumeUsd24Hr,
-                        marketCapUsd: cryptodata.marketCapUsd,
+                        crypto_id: crypto_id,
                     }
                 });
-                console.log(`Added to favorites: ${row.name}`);
+                console.log(`Added to favorites: ${crypto_id}`);
             }
-
         } catch (error) {
             console.error("Error adding to favorites:", error);
         }
@@ -99,11 +86,11 @@ const FavoritesTable = () => {
                 <Table.Cell key={column.name} style={cellStyles(column.name)} >
                     {column.name === 'sname' ? (
                         <Button
-                            onClick={() => onToggleFavorite(row)}
+                            onClick={() => onToggleFavorite(row.id)}
                             variant="outlined"
                             color="primary"
                         >
-                            {arrayFavs?.some((item) => item.name === row.name) ? 'Remove from Fav' : 'Add to Fav'}
+                            {arrayFavs?.some((fav) => parseInt(fav.crypto_id) === row.id) ? 'Remove from Fav' : 'Add to Fav'}
                         </Button>
                     ) : column.name === 'priceUsd' || column.name === 'marketCapUsd' || column.name === 'volumeUsd24Hr' ? (
                         `${row[column.name]} $`
@@ -146,4 +133,4 @@ const FavoritesTable = () => {
         </Paper>)
 }
 
-export default FavoritesTable;
+export default MainTable;

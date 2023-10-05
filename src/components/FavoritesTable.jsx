@@ -22,24 +22,16 @@ import { useMutation, useQuery } from '@apollo/client'
 
 import { ColumnExtensionsState, columns, cellStyles, SortingColumnExtensionsState } from "./gridProperties/favGrid";
 
-import { ADD_FAVORITE, ALL_FAVORITES, ALL_FAVORITES_DATA, REMOVE_FAVORITE } from "../apollo/favorites";
+import { ALL_FAVORITES, REMOVE_FAVORITE } from "../apollo/favorites";
+import AddRemovePortfolio from "./AddRemovePortfolio";
+import { GET_CRYPTOS_BY_IDS } from "../apollo/cryptos";
 
 const FavoriteTable = () => {
-    const { loading, error, data: cryptos } = useQuery(ALL_FAVORITES_DATA)
-    const { loadingFav, data: favorites } = useQuery(ALL_FAVORITES)
-    const [addFavorite] = useMutation(ADD_FAVORITE, {
-        refetchQueries: [
-            { query: ALL_FAVORITES }
-        ]
-        // update(cache, { data: { newFav } }) {
-        //     const { favorites } = cache.readQuery({ query: ALL_FAVORITES })
-        //     cache.writeQuery({
-        //         query: ALL_FAVORITES,
-        //         data: {
-        //             fovorites: [newFav, ...favorites]
-        //         }
-        //     })
-        // }
+    const { data: favorites } = useQuery(ALL_FAVORITES)
+    const arrayFavs = favorites?.allFavorites
+    const cryptoIds = arrayFavs.map((crypto) => parseInt(crypto.crypto_id));
+    const { loading, error, data: cryptos } = useQuery(GET_CRYPTOS_BY_IDS, {
+        variables: { ids: cryptoIds },
     });
     const [removeFavorite] = useMutation(REMOVE_FAVORITE, {
         refetchQueries: [
@@ -48,7 +40,8 @@ const FavoriteTable = () => {
     });
     const [tableColumnExtensions] = useState(ColumnExtensionsState);
     const [SortingColumnExtensions] = useState(SortingColumnExtensionsState);
-    const rawData = cryptos?.allFavorites;
+    const rawData = cryptos?.allCryptos;
+    console.log(arrayFavs)
     const isNumber = (value) => !isNaN(parseFloat(value)) && isFinite(value);
     const roundToNDecimalPlaces = (value, n) => {
         if (isNumber(value)) {
@@ -56,7 +49,6 @@ const FavoriteTable = () => {
         }
         return value;
     }
-    const arrayFavs = favorites?.allFavorites
     const filteredAndRoundedData = rawData?.map((crypto) => {
         return {
             ...crypto,
@@ -67,23 +59,32 @@ const FavoriteTable = () => {
             id: parseInt(crypto.id),
         };
     });
-    const toggleFavorite = async (name) => {
+    const toggleFavorite = async (id) => {
         try {
-            if (arrayFavs.some((item) => item.name === name)) {
-                const removedId = parseInt(arrayFavs.find((item) => item.name === name).id)
-                await removeFavorite({ variables: { id: removedId } });
-                console.log(`Removed to favorites: ${name}`);
-                console.log(arrayFavs)
-            }
-            else {
-                await addFavorite({ variables: { name } });
-                console.log(`Added to favorites: ${name}`);
-            }
-
+            const favid = arrayFavs.filter((obj) => obj.crypto_id === id.toString())[0]['id']
+            await removeFavorite({ variables: { id: favid } });
+            console.log(`Removed from favorites: ${favid.toString()}`);
         } catch (error) {
             console.error("Error adding to favorites:", error);
         }
     };
+    // const togglePortfolio = async (name) => {
+    //     try {
+    //         if (arrayPorts.some((item) => item.name === name)) {
+    //             const removedId = parseInt(arrayPorts.find((item) => item.name === name).id)
+    //             await removePortfolio({ variables: { id: removedId } });
+    //             console.log(`Removed to favorites: ${name}`);
+    //         }
+    //         else {
+    //             await addPortfolio({ variables: { name } });
+    //             console.log(`Added to favorites: ${name}`);
+    //         }
+    //         console.log(arrayPorts)
+
+    //     } catch (error) {
+    //         console.error("Error adding to portfolio:", error);
+    //     }
+    // };
 
     const TableRow = ({ row, onToggleFavorite }) => (
         <Table.Row>
@@ -91,15 +92,20 @@ const FavoriteTable = () => {
                 <Table.Cell key={column.name} style={cellStyles(column.name)} >
                     {column.name === 'sname' ? (
                         <Button
-                            onClick={() => onToggleFavorite(row.name)}
+                            onClick={() => onToggleFavorite(row.id)}
                             variant="outlined"
                             color="primary"
                         >
-                            {arrayFavs?.some((item) => item.name === row.name) ? 'Remove from Fav' : 'Add to Fav'}
+                            {'Remove from Fav'}
                         </Button>
                     ) : column.name === 'priceUsd' || column.name === 'marketCapUsd' || column.name === 'volumeUsd24Hr' ? (
                         `${row[column.name]} $`
-                    ) : (
+                    ) : column.name === 'p' ? (<AddRemovePortfolio
+                        isFavorite={arrayFavs?.some((item) => item.name === row.name)}
+                    // onTogglePortfolio={(amount) => togglePortfolio(row.name, amount)}
+                    >
+                        {arrayFavs?.some((item) => item.name === row.name) ? 'Remove from Fav' : 'Add to Fav'}
+                    </AddRemovePortfolio>) : (
                         row[column.name]
                     )}
                 </Table.Cell>

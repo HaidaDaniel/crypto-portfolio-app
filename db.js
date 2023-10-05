@@ -2907,14 +2907,8 @@ module.exports = {
                 'https://etherscan.io/token/0x0c7D5ae016f806603CB1782bEa29AC69471CAb9c',
         },
     ],
-    favorites: [
-        {
-            sname: 'bitcoin',
-            id: '1',
-            name: 'Bitcoin',
-            marketCapUsd: '536240400631.3554222242590000',
-            volumeUsd24Hr: '4769037348.5038614152451403',
-            priceUsd: '27495.5596443257082175',
-        },
+    favorites: [{ crypto_id: "1", id: 0 }, { crypto_id: "2", id: 1 }
+    ],
+    portfolios: [{ id: 0, amount: 1, crypto_id: "1" }, { id: 1, amount: 0.1, crypto_id: "2" }
     ],
 }
