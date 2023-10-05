@@ -1,19 +1,25 @@
 import { gql } from '@apollo/client'
 
-export const ALL_PORTFOLIO = gql`
-query AllPortfolio{
-    allPortfolio{
-     name,
-     priceUsd,
-     amount
+export const ALL_PORTFOLIOS = gql`
+query AllPortfolios{
+    allPortfolios{
+      crypto_id,
+      amount,id
      }
    }
 `
 export const ADD_PORTFOLIO = gql`
-mutation CreatePortfolio($name: String!, $priceUsd: String!, $amount: Float!) {
-  createPortfolio(name: $name, priceUsd: $priceUsd, amount: $amount) {
-    name
-    priceUsd
-    amount
-  }
-}`
+mutation AddPortfolio($crypto_id: ID! ,$amount: Float!){
+ createPortfolio(crypto_id:$crypto_id,amount:$amount){
+  crypto_id,
+  amount
+}
+}
+`
+export const REMOVE_PORTFOLIO = gql`
+mutation removePortfolio($id:ID!){
+ removePortfolio( id:$id){
+  id
+}
+}
+`

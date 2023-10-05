@@ -2909,6 +2909,6 @@ module.exports = {
     ],
     favorites: [{ crypto_id: "1", id: 0 }, { crypto_id: "2", id: 1 }
     ],
-    portfolios: [{ id: 0, amount: 1, crypto_id: "1" }, { id: 1, amount: 0.1, crypto_id: "2" }
+    portfolios: [{ id: 0, amount: 0.1, crypto_id: "1" }
     ],
 }

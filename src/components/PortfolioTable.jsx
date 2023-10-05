@@ -16,25 +16,30 @@ import {
     TableHeaderRow,
     PagingPanel,
 } from "@devexpress/dx-react-grid-material-ui";
-import { Button } from "@mui/material";
 import CircularProgress from '@mui/material/CircularProgress';
 import { useMutation, useQuery } from '@apollo/client'
 
-import { ColumnExtensionsState, columns, cellStyles, SortingColumnExtensionsState } from "./gridProperties/mainGrid";
-import { ALL_CRYPTOS } from "../apollo/cryptos";
-import { ADD_FAVORITE, ALL_FAVORITES, REMOVE_FAVORITE } from "../apollo/favorites";
+import { ColumnExtensionsState, columns, cellStyles, SortingColumnExtensionsState } from "./gridProperties/portfolioGrid";
+import AddRemovePortfolio from "./AddRemovePortfolio";
+import { GET_CRYPTOS_BY_IDS } from "../apollo/cryptos";
+import { ADD_PORTFOLIO, ALL_PORTFOLIOS, REMOVE_PORTFOLIO } from "../apollo/portfolio";
 
-const MainTable = () => {
-    const { loading, error, data: cryptos } = useQuery(ALL_CRYPTOS)
-    const { data: favorites } = useQuery(ALL_FAVORITES)
-    const [addFavorite] = useMutation(ADD_FAVORITE, {
+const PortfolioTable = () => {
+
+    const { data: portfolios } = useQuery(ALL_PORTFOLIOS)
+    const arrayPorts = portfolios?.allPortfolios
+    const cryptoIds = arrayPorts?.map((crypto) => parseInt(crypto.crypto_id));
+    const { loading, error, data: cryptos } = useQuery(GET_CRYPTOS_BY_IDS, {
+        variables: { ids: cryptoIds },
+    });
+    const [addPortfolio] = useMutation(ADD_PORTFOLIO, {
         refetchQueries: [
-            { query: ALL_FAVORITES }
+            { query: ALL_PORTFOLIOS }
         ]
     });
-    const [removeFavorite] = useMutation(REMOVE_FAVORITE, {
+    const [removePortfolio] = useMutation(REMOVE_PORTFOLIO, {
         refetchQueries: [
-            { query: ALL_FAVORITES }
+            { query: ALL_PORTFOLIOS }
         ]
     });
     const [tableColumnExtensions] = useState(ColumnExtensionsState);
@@ -47,62 +52,52 @@ const MainTable = () => {
         }
         return value;
     }
-    const arrayFavs = favorites?.allFavorites
     const filteredAndRoundedData = rawData?.map((crypto) => {
+        const amount = arrayPorts?.find((port) => port.crypto_id.toString() === crypto.id).amount || 0;
         return {
-            ...crypto,
-            marketCapUsd: parseInt(roundToNDecimalPlaces(crypto.marketCapUsd, 0)),
+            name: crypto.name,
             volumeUsd24Hr: parseInt(roundToNDecimalPlaces(crypto.volumeUsd24Hr, 0)),
             priceUsd: parseFloat(roundToNDecimalPlaces(crypto.priceUsd, 10)),
-            vwap24Hr: parseInt(roundToNDecimalPlaces(crypto.vwap24Hr, 0)),
             id: parseInt(crypto.id),
+            amount: amount
         };
     });
-    const toggleFavorite = async (crypto_id) => {
+    const togglePortfolio = async (id, amount) => {
         try {
-            if (arrayFavs?.some((fav) => parseInt(fav.crypto_id) === crypto_id)) {
-                const favid = arrayFavs?.find((obj) => obj.crypto_id === crypto_id.toString()).id
-                await removeFavorite({ variables: { id: favid } });
-                console.log(`Removed to favorites: ${crypto_id}`);
+            if (arrayPorts?.some((item) => parseInt(item.crypto_id) === id)) {
+                const removedId = arrayPorts?.find((obj) => obj.crypto_id === id.toString()).id
+                await removePortfolio({ variables: { id: removedId } });
+                console.log(`Removed to Portfolio: ${id}`);
             }
             else {
-                await addFavorite({
-                    variables: {
-                        crypto_id: crypto_id,
-                    }
-                });
-                console.log(`Added to favorites: ${crypto_id}`);
+                await addPortfolio({ variables: { crypto_id: id, amount: parseFloat(amount) } });
+                console.log(`Added to Portfolio: ${id}`);
             }
+
         } catch (error) {
-            console.error("Error adding to favorites:", error);
+            console.error("Error adding to portfolio:", error);
         }
     };
-
-    const TableRow = ({ row, onToggleFavorite }) => (
+    const TableRow = ({ row }) => (
         <Table.Row>
-            {columns.map((column) => (
+            {columns?.map((column) => (
                 <Table.Cell key={column.name} style={cellStyles(column.name)} >
-                    {column.name === 'sname' ? (
-                        <Button
-                            onClick={() => onToggleFavorite(row.id)}
-                            variant="outlined"
-                            color="primary"
-                        >
-                            {arrayFavs?.some((fav) => parseInt(fav.crypto_id) === row.id) ? 'Remove from Fav' : 'Add to Fav'}
-                        </Button>
-                    ) : column.name === 'priceUsd' || column.name === 'marketCapUsd' || column.name === 'volumeUsd24Hr' ? (
+                    {column.name === 'priceUsd' || column.name === 'marketCapUsd' || column.name === 'volumeUsd24Hr' ? (
                         `${row[column.name]} $`
-                    ) : (
+                    ) : column.name === 'p' ? (<AddRemovePortfolio
+                        isInPortfolio={arrayPorts?.some((item) => item.name === row.name)}
+                        onTogglePortfolio={(amount) => togglePortfolio(row.id, amount)}
+                    >
+                    </AddRemovePortfolio>) : (
                         row[column.name]
                     )}
                 </Table.Cell>
             ))}
         </Table.Row>)
-
     return (
         <Paper>
             {loading && <CircularProgress />}
-            {error && <div>Error in download data</div>}
+            {error && <div>Error in downloading data</div>}
             {!loading && (
                 <Grid rows={filteredAndRoundedData} columns={columns}>
                     <SortingState
@@ -119,7 +114,7 @@ const MainTable = () => {
                     <IntegratedPaging />
                     <Table columnExtensions={tableColumnExtensions}
                         rowComponent={({ row }) => (
-                            <TableRow row={row} onToggleFavorite={toggleFavorite} />
+                            <TableRow row={row} onTogglePortfolio={togglePortfolio} />
                         )}
                     />
                     <PagingPanel />
@@ -130,5 +125,4 @@ const MainTable = () => {
             )}
         </Paper>)
 }
-
-export default MainTable;
+export default PortfolioTable
