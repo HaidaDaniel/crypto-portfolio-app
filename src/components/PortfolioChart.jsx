@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
-import { Grid, Typography, Paper } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 import { styled } from '@mui/system';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -70,7 +70,7 @@ const PortfolioChart = ({ portfolioData }) => {
                 <Typography variant="h6">Cryptocurrencies</Typography>
                 {portfolioData.map((crypto, index) => (
                     <Typography key={index}>
-                        {crypto.name}: {crypto.amount} ({crypto.priceUsd.toFixed(2)}$)
+                        {crypto.name}:  ({crypto.amount * crypto.priceUsd.toFixed(2)}$)
                     </Typography>
                 ))}
             </DataContainer>
