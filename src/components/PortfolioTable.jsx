@@ -20,9 +20,10 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { useMutation, useQuery } from '@apollo/client'
 
 import { ColumnExtensionsState, columns, cellStyles, SortingColumnExtensionsState } from "./gridProperties/portfolioGrid";
-import AddRemovePortfolio from "./AddRemovePortfolio";
+
 import { GET_CRYPTOS_BY_IDS } from "../apollo/cryptos";
-import { ADD_PORTFOLIO, ALL_PORTFOLIOS, REMOVE_PORTFOLIO } from "../apollo/portfolio";
+import { ALL_PORTFOLIOS, REMOVE_PORTFOLIO, UPDATE_PORTFOLIO } from "../apollo/portfolio";
+import ChangePortfolioAmount from "./ChangePortfolioAmount";
 
 const PortfolioTable = () => {
 
@@ -32,12 +33,12 @@ const PortfolioTable = () => {
     const { loading, error, data: cryptos } = useQuery(GET_CRYPTOS_BY_IDS, {
         variables: { ids: cryptoIds },
     });
-    const [addPortfolio] = useMutation(ADD_PORTFOLIO, {
+    const [removePortfolio] = useMutation(REMOVE_PORTFOLIO, {
         refetchQueries: [
             { query: ALL_PORTFOLIOS }
         ]
     });
-    const [removePortfolio] = useMutation(REMOVE_PORTFOLIO, {
+    const [updatePortfolio] = useMutation(UPDATE_PORTFOLIO, {
         refetchQueries: [
             { query: ALL_PORTFOLIOS }
         ]
@@ -64,14 +65,16 @@ const PortfolioTable = () => {
     });
     const togglePortfolio = async (id, amount) => {
         try {
-            if (arrayPorts?.some((item) => parseInt(item.crypto_id) === id)) {
+            if (amount === 'del') {
                 const removedId = arrayPorts?.find((obj) => obj.crypto_id === id.toString()).id
                 await removePortfolio({ variables: { id: removedId } });
                 console.log(`Removed to Portfolio: ${id}`);
             }
             else {
-                await addPortfolio({ variables: { crypto_id: id, amount: parseFloat(amount) } });
-                console.log(`Added to Portfolio: ${id}`);
+                const updateId = arrayPorts?.find((obj) => obj.crypto_id === id.toString()).id
+                const updatedAmount = (arrayPorts?.find((obj) => obj.crypto_id === id.toString()).amount + amount).toFixed(8)
+                await updatePortfolio({ variables: { id: updateId, amount: parseFloat(updatedAmount) } });
+                console.log(`update in Portfolio: ${id}`);
             }
 
         } catch (error) {
@@ -84,11 +87,12 @@ const PortfolioTable = () => {
                 <Table.Cell key={column.name} style={cellStyles(column.name)} >
                     {column.name === 'priceUsd' || column.name === 'marketCapUsd' || column.name === 'volumeUsd24Hr' ? (
                         `${row[column.name]} $`
-                    ) : column.name === 'p' ? (<AddRemovePortfolio
-                        isInPortfolio={arrayPorts?.some((item) => item.name === row.name)}
-                        onTogglePortfolio={(amount) => togglePortfolio(row.id, amount)}
-                    >
-                    </AddRemovePortfolio>) : (
+                    ) : column.name === 'p' ? (<ChangePortfolioAmount
+                        initialValue={400}
+                        onAdd={(amount) => togglePortfolio(row.id, +amount)}
+                        onSubtract={(amount) => togglePortfolio(row.id, -amount)}
+                        onDelete={() => togglePortfolio(row.id, 'del')}
+                    />) : (
                         row[column.name]
                     )}
                 </Table.Cell>

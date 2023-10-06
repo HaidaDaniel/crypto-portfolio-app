@@ -15,14 +15,16 @@ const AddRemovePortfolio = ({ isInPortfolio, onTogglePortfolio }) => {
                 value={amount}
                 onChange={handleInputChange}
                 inputProps={{ min: 0 }}
+                size="small"
                 style={{ marginRight: '8px' }}
+                disabled={isInPortfolio}
             />
             <Button
                 onClick={() => onTogglePortfolio(amount)}
                 variant="outlined"
                 color="primary"
             >
-                {isInPortfolio ? '-portfolio' : '+portfolio'}
+                {isInPortfolio ? 'remove' : '+portfolio'}
             </Button>
         </Box>
     );

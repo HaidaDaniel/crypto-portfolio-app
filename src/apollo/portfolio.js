@@ -23,3 +23,10 @@ mutation removePortfolio($id:ID!){
 }
 }
 `
+export const UPDATE_PORTFOLIO = gql`
+mutation updatePortfolio($id:ID!, ,$amount: Float!){
+  updatePortfolio(id:$id,amount:$amount){
+   id,
+   amount
+ }
+ }`

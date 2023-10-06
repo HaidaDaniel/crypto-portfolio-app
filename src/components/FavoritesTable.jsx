@@ -32,7 +32,7 @@ const FavoriteTable = () => {
     const { data: portfolios } = useQuery(ALL_PORTFOLIOS)
     const arrayFavs = favorites?.allFavorites
     const arrayPorts = portfolios?.allPortfolios
-    const cryptoIds = arrayFavs.map((crypto) => parseInt(crypto.crypto_id));
+    const cryptoIds = arrayFavs?.map((crypto) => parseInt(crypto.crypto_id));
     const { loading, error, data: cryptos } = useQuery(GET_CRYPTOS_BY_IDS, {
         variables: { ids: cryptoIds },
     });
@@ -113,7 +113,7 @@ const FavoriteTable = () => {
                     ) : column.name === 'priceUsd' || column.name === 'marketCapUsd' || column.name === 'volumeUsd24Hr' ? (
                         `${row[column.name]} $`
                     ) : column.name === 'p' ? (<AddRemovePortfolio
-                        isInPortfolio={arrayPorts?.some((item) => item.name === row.name)}
+                        isInPortfolio={arrayPorts?.some((item) => parseInt(item.crypto_id) === row.id)}
                         onTogglePortfolio={(amount) => togglePortfolio(row.id, amount)}
                     >
                         {arrayFavs?.some((item) => item.name === row.name) ? 'Remove from Fav' : 'Add to Fav'}

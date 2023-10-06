@@ -13,7 +13,7 @@ export const columns = [
     },
     {
         name: 'p',
-        title: 'Add to portfolio',
+        title: 'Add to Amount',
     },
     {
         name: 'amount',
@@ -25,7 +25,7 @@ export const ColumnExtensionsState = [
     { columnName: 'name', width: '15%', align: 'center' },
     { columnName: 'priceUsd', width: '20%', align: 'right' },
     { columnName: 'volumeUsd24Hr', width: '15%', align: 'right' },
-    { columnName: 'p', width: '24%', align: 'center' },
+    { columnName: 'p', width: '28%', align: 'center' },
     { columnName: 'amount', width: '20%', align: 'center' },
 
 ]
