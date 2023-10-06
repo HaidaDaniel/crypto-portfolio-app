@@ -29,4 +29,5 @@ mutation updatePortfolio($id:ID!, ,$amount: Float!){
    id,
    amount
  }
- }`
+ }
+ `
