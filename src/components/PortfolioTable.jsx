@@ -24,10 +24,11 @@ import { ColumnExtensionsState, columns, cellStyles, SortingColumnExtensionsStat
 import { GET_CRYPTOS_BY_IDS } from "../apollo/cryptos";
 import { ALL_PORTFOLIOS, REMOVE_PORTFOLIO, UPDATE_PORTFOLIO } from "../apollo/portfolio";
 import ChangePortfolioAmount from "./ChangePortfolioAmount";
+import PortfolioChart from "./PortfolioChart";
 
 const PortfolioTable = () => {
 
-    const { data: portfolios } = useQuery(ALL_PORTFOLIOS)
+    const { loading: loadingP, data: portfolios } = useQuery(ALL_PORTFOLIOS)
     const arrayPorts = portfolios?.allPortfolios
     const cryptoIds = arrayPorts?.map((crypto) => parseInt(crypto.crypto_id));
     const { loading, error, data: cryptos } = useQuery(GET_CRYPTOS_BY_IDS, {
@@ -63,6 +64,8 @@ const PortfolioTable = () => {
             amount: amount
         };
     });
+    const portfolioData = filteredAndRoundedData
+    console.log(portfolioData)
     const togglePortfolio = async (id, amount) => {
         try {
             if (amount === 'del') {
@@ -100,32 +103,35 @@ const PortfolioTable = () => {
         </Table.Row>)
     return (
         <Paper>
-            {loading && <CircularProgress />}
+            {loadingP && loading && <CircularProgress />}
             {error && <div>Error in downloading data</div>}
-            {!loading && (
-                <Grid rows={filteredAndRoundedData} columns={columns}>
-                    <SortingState
-                        defaultSorting={[{ columnName: 'rank', direction: 'asc' }]}
-                        columnExtensions={SortingColumnExtensions}
-                    />
-                    <IntegratedSorting />
-                    <PagingState
-                        defaultCurrentPage={0}
-                        pageSize={20}
-                    />
-                    <SearchState defaultValue="" />
-                    <IntegratedFiltering />
-                    <IntegratedPaging />
-                    <Table columnExtensions={tableColumnExtensions}
-                        rowComponent={({ row }) => (
-                            <TableRow row={row} onTogglePortfolio={togglePortfolio} />
-                        )}
-                    />
-                    <PagingPanel />
-                    <Toolbar />
-                    <SearchPanel />
-                    <TableHeaderRow showSortingControls />
-                </Grid>
+            {!loadingP && !loading && (
+                <>
+                    <PortfolioChart portfolioData={filteredAndRoundedData} />
+                    <Grid rows={filteredAndRoundedData} columns={columns}>
+                        <SortingState
+                            defaultSorting={[{ columnName: 'rank', direction: 'asc' }]}
+                            columnExtensions={SortingColumnExtensions}
+                        />
+                        <IntegratedSorting />
+                        <PagingState
+                            defaultCurrentPage={0}
+                            pageSize={20}
+                        />
+                        <SearchState defaultValue="" />
+                        <IntegratedFiltering />
+                        <IntegratedPaging />
+                        <Table columnExtensions={tableColumnExtensions}
+                            rowComponent={({ row }) => (
+                                <TableRow row={row} onTogglePortfolio={togglePortfolio} />
+                            )}
+                        />
+                        <PagingPanel />
+                        <Toolbar />
+                        <SearchPanel />
+                        <TableHeaderRow showSortingControls />
+                    </Grid>
+                </>
             )}
         </Paper>)
 }
