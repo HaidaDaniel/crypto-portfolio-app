@@ -7,7 +7,7 @@ import { styled } from '@mui/system'
 
 ChartJS.register(ArcElement, Tooltip, Legend)
 
-const ChartContainer = styled(Grid)(({ theme }) => ({
+const ChartContainer = styled(Grid)(() => ({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',

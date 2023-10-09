@@ -20,7 +20,7 @@ const TableRow = ({
   <Table.Row>
     {columns.map((column) => (
       <Table.Cell key={column.name} style={cellStyles(column.name)}>
-        {column.name === 'sname' && isActionVisible ? (
+        {column.name === 'fav' && isActionVisible ? (
           <Button
             onClick={() => onToggleAction(row.id)}
             variant='outlined'

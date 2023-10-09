@@ -79,11 +79,11 @@ const FavoriteTable = () => {
   })
   const toggleFavorite = async (id) => {
     try {
-      const favid = arrayFavs.find((obj) => obj.crypto_id === id.toString())[
+      const favId = arrayFavs.find((obj) => obj.crypto_id === id.toString())[
         'id'
       ]
-      await removeFavorite({ variables: { id: favid } })
-      console.log(`Removed from favorites: ${favid.toString()}`)
+      await removeFavorite({ variables: { id: favId } })
+      console.log(`Removed from favorites: ${favId.toString()}`)
     } catch (error) {
       console.error('Error adding to favorites:', error)
     }

@@ -12,7 +12,7 @@ export const columns = [
         title: 'Volume /24Hr',
     },
     {
-        name: 'sname',
+        name: 'fav',
         title: 'Add to fav',
     },
     {
@@ -25,7 +25,7 @@ export const ColumnExtensionsState = [
     { columnName: 'name', width: '15%', align: 'center' },
     { columnName: 'priceUsd', width: '20%', align: 'right' },
     { columnName: 'volumeUsd24Hr', width: '15%', align: 'right' },
-    { columnName: 'sname', width: '19%', align: 'center' },
+    { columnName: 'fav', width: '19%', align: 'center' },
     { columnName: 'p', width: '25%', align: 'center' },
 
 ]
@@ -34,7 +34,7 @@ export const cellStyles = (name) => {
     switch (name) {
         case 'name':
             return { textAlign: 'center' }
-        case 'sname':
+        case 'fav':
             return { textAlign: 'center' }
         case 'p':
             return { textAlign: 'center' }
@@ -43,6 +43,6 @@ export const cellStyles = (name) => {
 }
 
 export const SortingColumnExtensionsState = [
-    { columnName: 'sname', sortingEnabled: false },
+    { columnName: 'fav', sortingEnabled: false },
     { columnName: 'p', sortingEnabled: false },
 ]
