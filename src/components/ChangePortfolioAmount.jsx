@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button, TextField, Box } from '@mui/material';
 
 const ChangePortfolioAmount = ({ onAdd, onSubtract, onDelete }) => {

@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button, TextField, Box } from '@mui/material';
 
 const AddRemovePortfolio = ({ isInPortfolio, onTogglePortfolio }) => {
-    const [amount, setAmount] = useState(0);
 
+    const [amount, setAmount] = useState(0);
     const handleInputChange = (event) => {
         setAmount(event.target.value);
     };

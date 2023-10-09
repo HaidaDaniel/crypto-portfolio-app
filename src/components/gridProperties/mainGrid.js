@@ -34,6 +34,7 @@ export const ColumnExtensionsState = [
     { columnName: 'sname', width: '19%', align: 'center' },
 
 ]
+
 export const cellStyles = (name) => {
     switch (name) {
         case 'id':
@@ -45,6 +46,7 @@ export const cellStyles = (name) => {
         default: return { textAlign: 'right' }
     }
 }
+
 export const SortingColumnExtensionsState = [
     { columnName: 'sname', sortingEnabled: false },
 ]

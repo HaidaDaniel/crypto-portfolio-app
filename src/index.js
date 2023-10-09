@@ -2,12 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { ApolloProvider } from '@apollo/client'
 import { ThemeProvider, createTheme } from '@mui/material';
-import client from './apollo/client';
-
-import './index.css';
-import { App } from './App';
 import reportWebVitals from './reportWebVitals';
 
+import client from './apollo/client';
+import { App } from './App';
+
+
+import './index.css';
 
 const theme = createTheme();
 

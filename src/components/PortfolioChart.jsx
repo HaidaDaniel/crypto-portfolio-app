@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 import { Grid, Typography } from '@mui/material';
@@ -58,7 +58,7 @@ const PortfolioChart = ({ portfolioData }) => {
     }, [portfolioData]);
 
     return (
-        <Grid container spacing={2}>
+        <Grid container spacing={2} style={{ marginTop: '1rem' }} >
             <ChartContainer item xs={12} md={6}>
                 {chartData.labels && (
                     <Doughnut data={chartData} />
