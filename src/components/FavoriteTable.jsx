@@ -19,7 +19,7 @@ import {
 import { Paper, CircularProgress } from '@mui/material'
 import { useMutation, useQuery } from '@apollo/client'
 
-import TableRow from './TableRow'
+import { TableRow } from './index'
 
 import {
   ColumnExtensionsState,
@@ -27,13 +27,14 @@ import {
   cellStyles,
   SortingColumnExtensionsState,
 } from './gridProperties/favGrid'
-import { ALL_FAVORITES, REMOVE_FAVORITE } from '../apollo/favorites'
-import { GET_CRYPTOS_BY_IDS } from '../apollo/cryptos'
 import {
   ADD_PORTFOLIO,
   ALL_PORTFOLIOS,
   REMOVE_PORTFOLIO,
-} from '../apollo/portfolio'
+  GET_CRYPTOS_BY_IDS,
+  ALL_FAVORITES,
+  REMOVE_FAVORITE,
+} from '../apollo/index'
 
 const FavoriteTable = () => {
   const { data: favorites } = useQuery(ALL_FAVORITES)

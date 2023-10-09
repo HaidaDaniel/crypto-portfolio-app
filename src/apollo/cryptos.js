@@ -24,3 +24,21 @@ query GetCryptosByIds($ids: [ID!]!) {
   }
 }
 `
+export const GET_CRYPTOS_BY_ID = gql`
+query GetCryptosById($id: ID!) {
+  Crypto( id: $id ) {
+    id,
+    name,
+    sname,
+    priceUsd,
+    volumeUsd24Hr,
+    marketCapUsd,
+    vwap24Hr,
+    explorer,
+    changePercent24Hr,
+    supply,
+    maxSupply,
+  }
+}
+`
+

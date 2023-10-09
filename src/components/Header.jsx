@@ -15,7 +15,7 @@ import { Link } from 'react-router-dom'
 
 const pages = ['Favorites', 'Portfolio']
 
-function ResponsiveAppBar() {
+function Header() {
   const [anchorElNav, setAnchorElNav] = React.useState(null)
 
   const handleOpenNavMenu = (event) => {
@@ -118,4 +118,4 @@ function ResponsiveAppBar() {
     </AppBar>
   )
 }
-export default ResponsiveAppBar
+export default Header

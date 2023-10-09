@@ -2,9 +2,9 @@
 import React from 'react'
 import { Button } from '@mui/material'
 import { Table } from '@devexpress/dx-react-grid-material-ui'
+import { Link } from 'react-router-dom'
 
-import AddRemovePortfolio from './AddRemovePortfolio'
-import ChangePortfolioAmount from './ChangePortfolioAmount'
+import { AddRemovePortfolio, ChangePortfolioAmount } from './index'
 
 const TableRow = ({
   row,
@@ -27,6 +27,14 @@ const TableRow = ({
             color='primary'>
             {actionLabel}
           </Button>
+        ) : column.name === 'name' ? (
+          <Link
+            component={Link}
+            to={`/crypto/${row.sname}`}
+            state={{ idOfCrypto: row.id }}
+            style={{ color: ' rgba(0, 0, 0, 0.87) ', textDecoration: 'none' }}>
+            {row.name}
+          </Link>
         ) : column.name === 'priceUsd' ||
           column.name === 'marketCapUsd' ||
           column.name === 'volumeUsd24Hr' ? (

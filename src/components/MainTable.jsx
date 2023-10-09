@@ -19,7 +19,7 @@ import {
 } from '@devexpress/dx-react-grid-material-ui'
 import { useMutation, useQuery } from '@apollo/client'
 
-import TableRow from './TableRow'
+import { TableRow } from './index'
 
 import {
   ColumnExtensionsState,
@@ -27,12 +27,12 @@ import {
   cellStyles,
   SortingColumnExtensionsState,
 } from './gridProperties/mainGrid'
-import { ALL_CRYPTOS } from '../apollo/cryptos'
 import {
   ADD_FAVORITE,
   ALL_FAVORITES,
   REMOVE_FAVORITE,
-} from '../apollo/favorites'
+  ALL_CRYPTOS,
+} from '../apollo/index'
 
 const MainTable = () => {
   const { loading, error, data: cryptos } = useQuery(ALL_CRYPTOS)

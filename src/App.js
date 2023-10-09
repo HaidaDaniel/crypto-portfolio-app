@@ -2,9 +2,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import './App.css'
-import { Main } from './components/pages/Main';
-import { Favorites } from './components/pages/Favorites'
-import { Portfolio } from './components/pages/Portfolio';
+import { Portfolio, Favorites, Main, CryptoPage } from './components/';
 
 export const App = () => (
   <BrowserRouter>
@@ -12,7 +10,7 @@ export const App = () => (
       <Route path='/' element={<Main />} />
       <Route path='/favorites' element={<Favorites />} />
       <Route path='/portfolio' element={<Portfolio />} />
-      {/* <Route path='/crypto/:cryptoId' element={<CryptoPage />} /> */}
+      <Route path='/crypto/:name' element={<CryptoPage />} />
     </Routes>
   </BrowserRouter>
 )

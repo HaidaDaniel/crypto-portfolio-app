@@ -19,8 +19,7 @@ import {
 } from '@devexpress/dx-react-grid-material-ui'
 import { useMutation, useQuery } from '@apollo/client'
 
-import PortfolioChart from './PortfolioChart'
-import TableRow from './TableRow'
+import { PortfolioChart, TableRow } from './index'
 
 import {
   ColumnExtensionsState,
@@ -28,12 +27,12 @@ import {
   cellStyles,
   SortingColumnExtensionsState,
 } from './gridProperties/portfolioGrid'
-import { GET_CRYPTOS_BY_IDS } from '../apollo/cryptos'
 import {
   ALL_PORTFOLIOS,
   REMOVE_PORTFOLIO,
   UPDATE_PORTFOLIO,
-} from '../apollo/portfolio'
+  GET_CRYPTOS_BY_IDS,
+} from '../apollo/index'
 
 const PortfolioTable = () => {
   const { loading: loadingP, data: portfolios } = useQuery(ALL_PORTFOLIOS)

@@ -1,10 +1,11 @@
-import Header from '../Header'
-import MainTable from '../MainTable'
+/** @format */
+import { MainTable, Header } from '../index'
 
-
-export const Main = () => (
-    <>
-        <Header></Header>
-        <MainTable></MainTable>
-    </>
+const Main = () => (
+  <>
+    <Header></Header>
+    <MainTable></MainTable>
+  </>
 )
+
+export default Main

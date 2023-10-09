@@ -1,10 +1,11 @@
-import Header from '../Header'
-import PortfolioTable from '../PortfolioTable'
+/** @format */
+import { PortfolioTable, Header } from '../index'
 
-
-export const Portfolio = () => (
-    <>
-        <Header></Header>
-        <PortfolioTable />
-    </>
+const Portfolio = () => (
+  <>
+    <Header></Header>
+    <PortfolioTable />
+  </>
 )
+
+export default Portfolio
