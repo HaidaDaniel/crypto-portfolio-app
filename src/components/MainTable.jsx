@@ -1,6 +1,6 @@
 /** @format */
 import { useState } from 'react'
-import Paper from '@mui/material/Paper'
+import { Paper, CircularProgress } from '@mui/material'
 import {
   SortingState,
   PagingState,
@@ -17,7 +17,6 @@ import {
   TableHeaderRow,
   PagingPanel,
 } from '@devexpress/dx-react-grid-material-ui'
-import CircularProgress from '@mui/material/CircularProgress'
 import { useMutation, useQuery } from '@apollo/client'
 
 import TableRow from './TableRow'
@@ -47,6 +46,7 @@ const MainTable = () => {
   const [tableColumnExtensions] = useState(ColumnExtensionsState)
   const [SortingColumnExtensions] = useState(SortingColumnExtensionsState)
   const rawData = cryptos?.allCryptos
+  const arrayFavs = favorites?.allFavorites
   const isNumber = (value) => !isNaN(parseFloat(value)) && isFinite(value)
   const roundToNDecimalPlaces = (value, n) => {
     if (isNumber(value)) {
@@ -64,14 +64,13 @@ const MainTable = () => {
       id: parseInt(crypto.id),
     }
   })
-  const arrayFavs = favorites?.allFavorites
   const toggleFavorite = async (crypto_id) => {
     try {
       if (arrayFavs?.some((fav) => parseInt(fav.crypto_id) === crypto_id)) {
-        const favid = arrayFavs?.find(
+        const favId = arrayFavs?.find(
           (obj) => obj.crypto_id === crypto_id.toString()
         ).id
-        await removeFavorite({ variables: { id: favid } })
+        await removeFavorite({ variables: { id: favId } })
         console.log(`Removed to favorites: ${crypto_id}`)
       } else {
         await addFavorite({

@@ -1,6 +1,6 @@
 /** @format */
 import { useState } from 'react'
-import Paper from '@mui/material/Paper'
+import { Paper, CircularProgress } from '@mui/material'
 import {
   SortingState,
   PagingState,
@@ -17,7 +17,6 @@ import {
   TableHeaderRow,
   PagingPanel,
 } from '@devexpress/dx-react-grid-material-ui'
-import CircularProgress from '@mui/material/CircularProgress'
 import { useMutation, useQuery } from '@apollo/client'
 
 import PortfolioChart from './PortfolioChart'
