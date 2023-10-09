@@ -6,8 +6,6 @@ import { Main } from './components/pages/Main';
 import { Favorites } from './components/pages/Favorites'
 import { Portfolio } from './components/pages/Portfolio';
 
-
-
 export const App = () => (
   <BrowserRouter>
     <Routes>
@@ -18,5 +16,3 @@ export const App = () => (
     </Routes>
   </BrowserRouter>
 )
-
-

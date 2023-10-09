@@ -1,5 +1,4 @@
 /** @format */
-
 import { useState } from 'react'
 import {
   SortingState,
@@ -103,7 +102,6 @@ const FavoriteTable = () => {
         })
         console.log(`Added to Portfolio: ${id}`)
       }
-      console.log(arrayPorts)
     } catch (error) {
       console.error('Error adding to portfolio:', error)
     }
