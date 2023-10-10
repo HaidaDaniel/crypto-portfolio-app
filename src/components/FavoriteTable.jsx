@@ -48,6 +48,7 @@ const FavoriteTable = () => {
     data: cryptos,
   } = useQuery(GET_CRYPTOS_BY_IDS, {
     variables: { ids: cryptoIds },
+    skip: !cryptoIds,
   })
   const [addPortfolio] = useMutation(ADD_PORTFOLIO, {
     refetchQueries: [{ query: ALL_PORTFOLIOS }],
@@ -112,7 +113,7 @@ const FavoriteTable = () => {
     <Paper>
       {loading && <CircularProgress />}
       {error && <div>Error in downloading data</div>}
-      {!loading && (
+      {!loading && cryptoIds && (
         <Grid rows={filteredAndRoundedData} columns={columns}>
           <SortingState
             defaultSorting={[{ columnName: 'rank', direction: 'asc' }]}

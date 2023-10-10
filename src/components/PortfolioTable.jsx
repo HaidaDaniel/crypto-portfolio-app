@@ -44,6 +44,7 @@ const PortfolioTable = () => {
     data: cryptos,
   } = useQuery(GET_CRYPTOS_BY_IDS, {
     variables: { ids: cryptoIds },
+    skip: !cryptoIds,
   })
   const [removePortfolio] = useMutation(REMOVE_PORTFOLIO, {
     refetchQueries: [{ query: ALL_PORTFOLIOS }],
@@ -103,7 +104,7 @@ const PortfolioTable = () => {
     <Paper>
       {loadingP && loading && <CircularProgress />}
       {error && <div>Error in downloading data</div>}
-      {!loadingP && !loading && (
+      {!loading && cryptoIds && (
         <>
           <PortfolioChart portfolioData={filteredAndRoundedData} />
           <Grid rows={filteredAndRoundedData} columns={columns}>
