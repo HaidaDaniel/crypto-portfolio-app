@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@apollo/client": "^3.8.4",
     "@devexpress/dx-react-core": "^4.0.5",
     "@devexpress/dx-react-grid": "^4.0.5",
     "@devexpress/dx-react-grid-material-ui": "^4.0.5",
@@ -16,16 +17,24 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.5.1",
+    "chart.js": "^4.4.0",
+    "chartjs-adapter-date-fns": "^3.0.0",
+    "chartjs-adapter-moment": "^1.0.1",
+    "date-fns": "^2.30.0",
+    "graphql": "^16.8.1",
+    "moment": "^2.29.4",
     "react": "^18.2.0",
+    "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1",
+    "react-router-dom": "^6.16.0",
+    "react-scripts": "^5.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "concurrently \"npm run dev\" \"npm run server\"",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "dev": "react-scripts start",
+    "server": "json-graphql-server db.js --p 4000"
   },
   "eslintConfig": {
     "extends": [
@@ -44,5 +53,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "concurrently": "^7.2.2",
+    "json-graphql-server": "^2.3.1"
   }
 }
