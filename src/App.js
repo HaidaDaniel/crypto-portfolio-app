@@ -1,8 +1,9 @@
 /** @format */
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import './App.css'
 import { Portfolio, Favorites, Main, CryptoPage } from './components/';
+
+import './App.css'
 
 export const App = () => (
   <BrowserRouter>

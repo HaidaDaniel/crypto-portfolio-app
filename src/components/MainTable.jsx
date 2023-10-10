@@ -111,8 +111,8 @@ const MainTable = () => {
                 isActionVisible={true}
                 actionLabel={
                   arrayFavs?.some((fav) => parseInt(fav.crypto_id) === row.id)
-                    ? 'Remove from Fav'
-                    : 'Add to Fav'
+                    ? 'Remove'
+                    : 'Add'
                 }
               />
             )}

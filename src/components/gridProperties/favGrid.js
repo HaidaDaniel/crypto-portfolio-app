@@ -23,10 +23,10 @@ export const columns = [
 
 export const ColumnExtensionsState = [
     { columnName: 'name', width: '15%', align: 'center' },
-    { columnName: 'priceUsd', width: '20%', align: 'right' },
+    { columnName: 'priceUsd', width: '19%', align: 'right' },
     { columnName: 'volumeUsd24Hr', width: '15%', align: 'right' },
-    { columnName: 'fav', width: '19%', align: 'center' },
-    { columnName: 'p', width: '25%', align: 'center' },
+    { columnName: 'fav', width: '20%', align: 'center' },
+    { columnName: 'p', width: '31%', align: 'center' },
 
 ]
 

@@ -23,6 +23,7 @@ const CryptoDetails = () => {
     <Container>
       <Typography variant='h4'>{crypto.name}</Typography>
       <Paper elevation={3} sx={{ p: 2, mt: 2 }}>
+        <CryptoPriceChart cryptoId={crypto.sname} />
         <Grid container spacing={3}>
           <Grid item xs={6}>
             <Typography variant='subtitle1'>Supply:</Typography>
@@ -64,7 +65,6 @@ const CryptoDetails = () => {
             </Link>
           </Grid>
         </Grid>
-        <CryptoPriceChart cryptoId={crypto.sname} />
       </Paper>
     </Container>
   )

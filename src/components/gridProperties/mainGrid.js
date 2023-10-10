@@ -26,11 +26,11 @@ export const columns = [
 ]
 
 export const ColumnExtensionsState = [
-    { columnName: 'id', width: '10%', align: 'left' },
+    { columnName: 'id', width: '13%', align: 'center' },
     { columnName: 'name', width: '15%', align: 'center' },
-    { columnName: 'priceUsd', width: '20%', align: 'right' },
+    { columnName: 'priceUsd', width: '21%', align: 'right' },
     { columnName: 'volumeUsd24Hr', width: '15%', align: 'right' },
-    { columnName: 'marketCapUsd', width: '16%', align: 'right' },
+    { columnName: 'marketCapUsd', width: '18%', align: 'right' },
     { columnName: 'fav', width: '19%', align: 'center' },
 
 ]
