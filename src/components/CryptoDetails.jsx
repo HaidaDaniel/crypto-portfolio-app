@@ -1,18 +1,17 @@
 /** @format */
-import { useLocation, useParams } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { Container, Typography, Link, Grid, Paper } from '@mui/material'
 import { useQuery } from '@apollo/client'
+
+import { CryptoPriceChart } from './index'
+
 import { GET_CRYPTOS_BY_ID } from '../apollo'
 
 const CryptoDetails = () => {
   let { state } = useLocation()
   const cryptoId = state.idOfCrypto
 
-  const {
-    loading,
-    error,
-    data: cryptoData,
-  } = useQuery(GET_CRYPTOS_BY_ID, {
+  const { data: cryptoData } = useQuery(GET_CRYPTOS_BY_ID, {
     variables: { id: cryptoId },
   })
   const crypto = cryptoData?.Crypto
@@ -24,14 +23,16 @@ const CryptoDetails = () => {
     <Container>
       <Typography variant='h4'>{crypto.name}</Typography>
       <Paper elevation={3} sx={{ p: 2, mt: 2 }}>
-        <Grid container spacing={2}>
+        <Grid container spacing={3}>
           <Grid item xs={6}>
             <Typography variant='subtitle1'>Supply:</Typography>
             <Typography>{crypto.supply}</Typography>
           </Grid>
           <Grid item xs={6}>
             <Typography variant='subtitle1'>Max Supply:</Typography>
-            <Typography>{crypto.maxSupply}</Typography>
+            <Typography>
+              {crypto.maxSupply !== null ? crypto.maxSupply : '\u221E'}
+            </Typography>
           </Grid>
           <Grid item xs={6}>
             <Typography variant='subtitle1'>Market Cap (USD):</Typography>
@@ -63,6 +64,7 @@ const CryptoDetails = () => {
             </Link>
           </Grid>
         </Grid>
+        <CryptoPriceChart cryptoId={crypto.sname} />
       </Paper>
     </Container>
   )

@@ -7,6 +7,7 @@ export { default as PortfolioChart } from "./PortfolioChart";
 export { default as PortfolioTable } from "./PortfolioTable";
 export { default as TableRow } from "./TableRow";
 export { default as CryptoDetails } from './CryptoDetails'
+export { default as CryptoPriceChart } from './CryptoPriceChart'
 export { default as Favorites } from "./pages/Favorites";
 export { default as Main } from "./pages/Main";
 export { default as Portfolio } from "./pages/Portfolio";
