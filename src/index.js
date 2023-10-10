@@ -1,15 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { ApolloProvider } from '@apollo/client'
-import { ThemeProvider, createTheme } from '@mui/material';
+import { ThemeProvider } from '@mui/material';
 import reportWebVitals from './reportWebVitals';
 
 import { App } from './App';
 
 import client from './apollo/client'
+import { theme } from './theme'
 import './index.css';
 
-const theme = createTheme();
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

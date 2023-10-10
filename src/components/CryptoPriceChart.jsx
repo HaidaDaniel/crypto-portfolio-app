@@ -1,5 +1,4 @@
 /** @format */
-
 import React, { useState, useEffect } from 'react'
 import {
   Chart as ChartJS,
@@ -16,6 +15,7 @@ import {
 import { Line } from 'react-chartjs-2'
 import 'chartjs-adapter-date-fns'
 import { enUS } from 'date-fns/locale'
+import Button from '@mui/material/Button'
 
 ChartJS.register(
   CategoryScale,
@@ -31,8 +31,19 @@ ChartJS.register(
 
 const CryptoPriceChart = ({ cryptoId }) => {
   const [priceData, setPriceData] = useState([])
-
   const [timeInterval, setTimeInterval] = useState('d1')
+
+  const timeIntervals = [
+    'm1',
+    'm5',
+    'm15',
+    'm30',
+    'h1',
+    'h2',
+    'h6',
+    'h12',
+    'd1',
+  ]
 
   const fetchPriceData = async () => {
     try {
@@ -91,15 +102,15 @@ const CryptoPriceChart = ({ cryptoId }) => {
       <h2>Price Chart for {cryptoId}</h2>
       <div>
         <div>
-          <button onClick={() => handleTimeIntervalChange('m1')}>m1</button>
-          <button onClick={() => handleTimeIntervalChange('m5')}>m5</button>
-          <button onClick={() => handleTimeIntervalChange('m15')}>m15</button>
-          <button onClick={() => handleTimeIntervalChange('m30')}>m30</button>
-          <button onClick={() => handleTimeIntervalChange('h1')}>h1</button>
-          <button onClick={() => handleTimeIntervalChange('h2')}>h2</button>
-          <button onClick={() => handleTimeIntervalChange('h6')}>h6</button>
-          <button onClick={() => handleTimeIntervalChange('h12')}>h12</button>
-          <button onClick={() => handleTimeIntervalChange('d1')}>d1</button>
+          {timeIntervals.map((interval) => (
+            <Button
+              key={interval}
+              variant='contained'
+              color={interval === timeInterval ? 'primary' : 'secondary'}
+              onClick={() => handleTimeIntervalChange(interval)}>
+              {interval}
+            </Button>
+          ))}
         </div>
       </div>
       <Line data={chartData} options={chartOptions} />

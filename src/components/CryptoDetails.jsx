@@ -55,7 +55,7 @@ const CryptoDetails = () => {
             <Typography variant='subtitle1'>VWAP (24Hr):</Typography>
             <Typography>${crypto.vwap24Hr}</Typography>
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={6}>
             <Typography variant='subtitle1'>Explorer:</Typography>
             <Link
               href={crypto.explorer}
