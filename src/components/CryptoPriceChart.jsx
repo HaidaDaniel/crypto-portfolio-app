@@ -16,6 +16,7 @@ import { Line } from 'react-chartjs-2'
 import 'chartjs-adapter-date-fns'
 import { enUS } from 'date-fns/locale'
 import Button from '@mui/material/Button'
+import { ButtonGroup, Paper } from '@mui/material'
 
 ChartJS.register(
   CategoryScale,
@@ -98,23 +99,27 @@ const CryptoPriceChart = ({ cryptoId }) => {
   }
 
   return (
-    <div>
+    <Paper>
       <h2>Price Chart for {cryptoId}</h2>
       <div>
         <div>
-          {timeIntervals.map((interval) => (
-            <Button
-              key={interval}
-              variant='contained'
-              color={interval === timeInterval ? 'primary' : 'secondary'}
-              onClick={() => handleTimeIntervalChange(interval)}>
-              {interval}
-            </Button>
-          ))}
+          <ButtonGroup
+            variant='contained'
+            aria-label='outlined primary button group'>
+            {timeIntervals.map((interval) => (
+              <Button
+                key={interval}
+                variant='contained'
+                color={interval === timeInterval ? 'primary' : 'secondary'}
+                onClick={() => handleTimeIntervalChange(interval)}>
+                {interval}
+              </Button>
+            ))}
+          </ButtonGroup>
         </div>
       </div>
       <Line data={chartData} options={chartOptions} />
-    </div>
+    </Paper>
   )
 }
 
