@@ -73,6 +73,7 @@
     "json-graphql-server": "^2.3.1",
     "prop-types": "^15.8.1",
     "storybook": "^7.4.6",
+    "storybook-addon-apollo-client": "^5.0.0",
     "webpack": "^5.88.2"
   }
 }

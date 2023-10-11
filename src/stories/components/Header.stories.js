@@ -9,8 +9,6 @@ export default {
 
 export const HeaderStory = () => (
     <MemoryRouter>
-        <div id="app-container">
-            <Header />
-        </div>
+        <Header />
     </MemoryRouter>
 )

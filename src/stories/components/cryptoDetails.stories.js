@@ -1,6 +1,6 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
-import { CryptoDetails } from '../../../src/components/index';
+import { CryptoDetails } from '../../components/index';
 import { ApolloProvider } from '@apollo/client';
 import client from '../../apollo/client';
 export default {
